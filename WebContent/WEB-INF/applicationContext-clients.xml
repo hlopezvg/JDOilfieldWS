@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://cxf.apache.org/jaxws 
+		http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<bean id="helloWorldClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.demo.HelloWorld" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/HelloWorld" />
+	</bean>
+	<bean id="helloWorldClient" class="com.jdoilfield.ws.demo.HelloWorld" factory-bean="helloWorldClientFactory"
+		factory-method="create" />
+
+	<bean id="syncServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.syncservice.SyncServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/SyncService" />
+	</bean>
+	<bean id="syncServiceClient" class="com.jdoilfield.ws.syncservice.SyncServiceInterface" factory-bean="syncServiceClientFactory"
+		factory-method="create" />
+
+	<bean id="balanceServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.balanceservice.BalanceServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/BalanceService" />
+	</bean>
+	<bean id="balanceServiceClient" class="com.jdoilfield.ws.balanceservice.BalanceServiceInterface"
+		factory-bean="balanceServiceClientFactory" factory-method="create" />
+		
+	<bean id="paymentServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.paymentservice.PaymentServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/PaymentService" />
+	</bean>
+	<bean id="paymentServiceClient" class="com.jdoilfield.ws.paymentservice.PaymentServiceInterface"
+		factory-bean="paymentServiceClientFactory" factory-method="create" />
+		
+	<bean id="ticketAuthServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.ticketauthservice.TicketAuthServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/TicketAuthService" />
+	</bean>
+	<bean id="ticketAuthServiceClient" class="com.jdoilfield.ws.ticketauthservice.TicketAuthServiceInterface"
+		factory-bean="ticketAuthServiceClientFactory" factory-method="create" />
+		
+	<bean id="ticketServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.ticketservice.TicketServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/TicketService" />
+	</bean>
+	<bean id="ticketServiceClient" class="com.jdoilfield.ws.ticketservice.TicketServiceInterface"
+		factory-bean="ticketServiceClientFactory" factory-method="create" />
+	
+	<!-- FUEL CARD -->
+	<bean id="fuelCardServiceClientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.jdoilfield.ws.fuelcardservice.FuelCardServiceInterface" />
+		<property name="address" value="http://localhost:8080/JDOilfieldWS/FuelCardService" />
+	</bean>
+	<bean id="fuelCardServiceClient" class="com.jdoilfield.ws.fuelcardservice.FuelCardServiceInterface"
+		factory-bean="fuelCardServiceClientFactory" factory-method="create" />
+</beans>

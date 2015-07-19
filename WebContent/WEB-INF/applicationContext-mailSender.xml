@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="mailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/mail/Session" />
+	</bean>
+
+	<!-- Referencia a la configuracion de MailSession en el contexto de applicacion JNDI -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="session" ref="mailSession" />
+	</bean>
+
+   <bean id="simpleMessage" class="org.springframework.mail.SimpleMailMessage">
+            <property name="from">
+                    <value><![CDATA[JDOildfield - SIO<no_reply@JDOildfield.com.ve>]]></value>
+            </property>
+            <property name="subject">
+                    <value><![CDATA[Rolda - SIO ]]></value>
+            </property>
+    </bean>
+	
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<value>
+				resource.loader=class
+				class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+			</value>
+		</property>
+	</bean>
+
+	<bean id="springMailSender" class="com.jdoilfield.operationalsystem.util.SpringMailSender">
+		<property name="mailSender" ref="mailSender" />
+		<property name="simpleMessage" ref="simpleMessage" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="templates">
+			<map>
+				<entry key="newAirplane" value="com/jdoilfield/ws/mail/templates/newAirplaneTemplate.vm" />
+			</map>	
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 
+	<bean id="ticketManager" class="com.jdoilfield.ws.ticketservice.business.TicketManager">
+		<property name="businessPartnerDao" ref="businessPartnerDao" />
+		<property name="remoteTicketDao" ref="remoteTicketDao" />
+		<property name="airportDao" ref="airportDao" />
+		<property name="ticketDao" ref="ticketDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="mailSender" ref="springMailSender" />
+	</bean>
+	 -->
+	
+	<bean id="ticketServiceValidator" class="com.jdoilfield.ws.ticketservice.business.Validation">
+		<property name="userManager" ref="userManager" />
+	</bean>
+
+	<!-- 
+	<bean id="ticketServiceImpl" class="com.jdoilfield.ws.ticketservice.impl.TicketServiceImpl">
+		<property name="ticketManager" ref="ticketManager" />
+		<property name="validation" ref="ticketServiceValidator" />
+	</bean>
+	 -->
+
+	<bean id="ticketServiceManager" class="com.jdoilfield.ws.ticketservice.TicketServiceManager">
+		<property name="ticketManager" ref="ticketAuthManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="airportManager" ref="airportManager" />
+		<property name="validation" ref="ticketServiceValidator" />
+	</bean>
+</beans>

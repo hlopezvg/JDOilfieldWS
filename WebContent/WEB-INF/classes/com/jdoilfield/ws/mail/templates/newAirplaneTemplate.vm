@@ -1,0 +1,130 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>J&DOilfield Operational System</title>
+    <style type="text/css">
+<!--
+.celdaTipo {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	text-transform: capitalize;
+	color: #FFFFFF;
+	background-color: #0033CC;
+	text-align: left;
+	display: table-cell;
+}
+.piepag {
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+	font-weight: normal;
+}
+.tabla {
+	background-color: #CCCCCC;
+	border: thin solid #000000;
+}
+.titulo {
+	font-weight: bold;
+	text-align: center;
+}
+-->
+    </style>
+</head>
+<body>
+<h3 class="titulo">J&amp;DOilfield Operational System</h3>
+<h4>Notificacion de Boleta con Matricula nueva</h4>
+<p>Este mensaje se ha generado autom&aacute;ticamente para informar que existe una Boleta con una matr&iacute;cula nueva y esta esperando su aprobaci&oacute;n:</p>
+<p>
+<table width="500" border='1' align="center" cellspacing="0" class="tabla" >
+	<tr>
+		<td colspan="2"><b><center>Datos de la Boleta</center></b></td>
+	</tr>
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Id</td>
+		<td bgcolor="#ccecff">${ticket.id}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Codigo de boleta</td>
+		<td>${ticket.ticketCode}</td>
+	</tr>	
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Cod. Cliente</td>
+		<td bgcolor="#ccecff">${ticket.clientCode}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Cliente</td>
+		<td>${ticket.cardnameClient}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Cod. Proveedor</td>
+		<td bgcolor="#ccecff">${ticket.providerCode}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Proveedor</td>
+		<td>${ticket.cardnameProvider}</td>
+	</tr>
+
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Cod. Producto</td>
+		<td bgcolor="#ccecff">${ticket.productCode}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Producto</td>
+		<td>${ticket.itemname}</td>
+	</tr>
+
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Nuevo Avion</td>
+		<td bgcolor="#ccecff">${ticket.newAirplane}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Cod. Avion</td>
+		<td>${ticket.newAirplaneCode}</td>
+	</tr>
+
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Tiene Sobregiro?</td>
+		<td bgcolor="#ccecff">${ticket.overdraft}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Registrado por</td>
+		<td>${ticket.releasedBy}</td>
+	</tr>
+
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Fecha del Registro</td>
+		<td bgcolor="#ccecff">${date}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Cant. Litros</td>
+		<td>${ticket.quantityLts}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo" bgcolor="#ccecff">Cant. Galones</td>
+		<td bgcolor="#ccecff">${ticket.quantityGal}</td>
+	</tr>
+	<tr>
+		<td class="celdaTipo">Login Usuario</td>
+		<td>${user.login}</td>
+	</tr>
+
+	
+</table> 
+<p>
+<p>
+Los siguientes pasos que ud debe ejecutar en su sistema administrativo son:
+<p>
+1.- Registrar el nuevo avion con su matricula.
+<p> 
+2.- Registrar la Boleta.
+
+</p>
+
+<hr>
+<p class="piepag">
+ESTE DOCUMENTO FUE GENERADO AUTOMATICAMENTE.
+POR FAVOR NO RESPONDER A ESTE CORREO <br>
+THIS DOCUMENT IS AUTOMATICALLY GENERATED.
+PLEASE DO NOT RESPOND TO THIS MAIL </p>
+</body>
+</html>

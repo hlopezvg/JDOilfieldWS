@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    	
+    <!-- Datasources -->
+    
+    <!--
+    <bean id="dataSourcePostgresql" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/jdoilfield" />
+	</bean>
+	-->
+	
+	<bean id="dataSourcePostgresql" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+		<property name="driverClassName" value="org.postgresql.Driver"/>
+		<property name="url" value="jdbc:postgresql://localhost:5432/jyd_test"/>
+		<property name="username" value="postgres"/>
+		<property name="password" value="postgres"/>
+	</bean>
+	
+	<!--
+    <bean id="dataSourceSQLServer" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/BussinessOne" />
+	</bean>
+	-->
+	
+	<bean id="dataSourceSQLServer" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name="url" value="jdbc:sqlserver://localhost;databaseName=JD_test"/>
+		<property name="username" value="sa"/>
+		<property name="password" value="admin"/>
+	</bean>
+	
+	<!-- *************************************************************************** -->
+
+	<bean id="entityManagerFactoryPostgresql" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourcePostgresql" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="OwnerPersistenceUnit" />
+	</bean>
+
+	<bean id="entityManagerFactorySQLServer" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceSQLServer" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="ExternalPersistenceUnit" />
+	</bean>
+
+	<bean id="localTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactoryPostgresql" />
+		<property name="dataSource" ref="dataSourcePostgresql" />
+	</bean>
+
+	<bean id="remoteTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorySQLServer" />
+		<property name="dataSource" ref="dataSourceSQLServer" />
+	</bean>
+	
+	<!-- 
+	<bean id="remoteTransactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<bean class="org.springframework.orm.jpa.JpaTransactionManager">
+				<property name="entityManagerFactory" ref="entityManagerFactorySQLServer"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="jpaTemplate" class="org.springframework.orm.jpa.JpaTemplate">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	-->
+
+	<tx:annotation-driven transaction-manager="localTransactionManager" />
+	<tx:annotation-driven transaction-manager="remoteTransactionManager" />
+
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- ******************DEFINION DE BEANS DE PERSISTENCIA ********************* -->
+
+	<bean id="daoTest" class="com.jdoilfield.ws.test.DaoImplTest" />
+	<!-- 
+	<bean id="remoteTicketDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.RemoteTicketDAOImpl"></bean>
+	<bean id="airportDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.AirportDAOImpl"></bean>
+	 -->
+	
+	<bean id="managerTest" class="com.jdoilfield.ws.test.ManagerImplTest">
+		<property name="dao" ref="daoTest" />
+		<property name="transactionManager" ref="remoteTransactionManager"/>
+	</bean>
+</beans>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<display-name>JDOilfieldWS</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			WEB-INF/applicationContext.xml
+			WEB-INF/applicationContext-balanceServices.xml
+			WEB-INF/applicationContext-fuelCardServices.xml
+			WEB-INF/applicationContext-mailSender.xml
+			WEB-INF/applicationContext-paymentServices.xml
+			WEB-INF/applicationContext-persistence.xml
+			WEB-INF/applicationContext-syncServices.xml
+			WEB-INF/applicationContext-ticketAuthServices.xml
+			WEB-INF/applicationContext-ticketServices.xml
+			WEB-INF/applicationContext-webServices.xml
+		</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<display-name>CXF Servlet</display-name>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 
+	<servlet>
+        <servlet-name>perf4j</servlet-name>
+        <servlet-class>org.perf4j.log4j.servlet.GraphingServlet</servlet-class>
+        <init-param>
+            <param-name>graphNames</param-name>
+            <param-value>graphExecutionTPS</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>perf4j</servlet-name>
+        <url-pattern>/perf4j</url-pattern>
+    </servlet-mapping>
+     -->
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

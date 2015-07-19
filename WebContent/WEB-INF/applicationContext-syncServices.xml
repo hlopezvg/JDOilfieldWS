@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="airportSync" class="com.jdoilfield.ws.syncservice.business.AirportSync">
+		<property name="airportManager" ref="airportManager" />
+	</bean>
+	<bean id="airplaneSync" class="com.jdoilfield.ws.syncservice.business.AirplaneSync">
+		<property name="userManager" ref="userManager" />
+		<property name="airplaneManager" ref="airplaneManager" />
+	</bean>
+	<bean id="businessPartnerSync" class="com.jdoilfield.ws.syncservice.business.BusinessPartnerSync">
+		<property name="userManager" ref="userManager" />
+		<property name="businessPartnerManager" ref="businessPartnerManager" />
+	</bean>
+	<bean id="productSync" class="com.jdoilfield.ws.syncservice.business.ProductSync">
+		<property name="productManager" ref="productManager" />
+	</bean>
+	<bean id="roleComponentSync" class="com.jdoilfield.ws.syncservice.business.RoleComponentSync">
+		<property name="roleComponentManager" ref="roleComponentManager" />
+	</bean>
+	<bean id="userSync" class="com.jdoilfield.ws.syncservice.business.UserSync">
+		<property name="userManager" ref="userManager" />
+	</bean>
+	<bean id="syncServiceValidator" class="com.jdoilfield.ws.syncservice.business.SyncServiceValidator">
+		<property name="userManager" ref="userManager" />
+	</bean>
+
+	<!-- 
+	<bean id="syncServiceImpl" class="com.jdoilfield.ws.syncservice.impl.SyncServiceImpl">
+		<property name="airportSync" ref="airportSync" />
+		<property name="airplaneSync" ref="airplaneSync" />
+		<property name="businessPartnerSync" ref="businessPartnerSync" />
+		<property name="productSync" ref="productSync" />
+		<property name="roleComponentSync" ref="roleComponentSync" />
+		<property name="userSync" ref="userSync" />
+		<property name="syncServiceValidator" ref="syncServiceValidator" />
+	</bean>
+	 -->
+
+	<bean id="syncServiceManager" class="com.jdoilfield.ws.syncservice.SyncServiceManager">
+		<property name="airportSync" ref="airportSync" />
+		<property name="airplaneSync" ref="airplaneSync" />
+		<property name="businessPartnerSync" ref="businessPartnerSync" />
+		<property name="productSync" ref="productSync" />
+		<property name="roleComponentSync" ref="roleComponentSync" />
+		<property name="userSync" ref="userSync" />
+		<property name="syncServiceValidator" ref="syncServiceValidator" />
+	</bean>
+</beans>

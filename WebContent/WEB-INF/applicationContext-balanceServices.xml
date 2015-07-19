@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="balanceServiceValidator" class="com.jdoilfield.ws.balanceservice.business.BalanceServiceValidator">
+		<property name="userManager" ref="userManager" />
+	</bean>
+
+	<!-- 
+	<bean id="balanceServiceImpl" class="com.jdoilfield.ws.balanceservice.impl.BalanceServiceImpl">
+		<property name="businessPartnerManager" ref="businessPartnerManager" />
+		<property name="balanceServiceValidator" ref="balanceServiceValidator" />
+	</bean>
+	 -->
+
+	<bean id="balanceServiceManager" class="com.jdoilfield.ws.balanceservice.BalanceServiceManager">
+		<property name="businessPartnerManager" ref="businessPartnerManager" />
+		<property name="balanceServiceValidator" ref="balanceServiceValidator" />
+	</bean>
+</beans>

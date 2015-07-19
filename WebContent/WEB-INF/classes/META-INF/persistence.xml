@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://java.sun.com/xml/ns/persistence
+		http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="OwnerPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>com.jdoilfield.operationalsystem.domain.local.Airport</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.AirportFuelRequest</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.FuelRequest</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.ProductFuelRequest</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.ProviderFuelRequest</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.Component</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.Lov</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.Payment</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.Role</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.RoleComponent</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.Ticket</class>
+		<class>com.jdoilfield.operationalsystem.domain.local.User</class>
+
+		<exclude-unlisted-classes />
+	</persistence-unit>
+
+	<persistence-unit name="ExternalPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Account</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.AccountStatement</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Airplane</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.AirplaneId</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Bank</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.BusinessPartner</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Contact</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Currency</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Document</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.DocumentDetail</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.DocumentDetailId</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.DocumentId</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.DocumentType</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.RemotePayment</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.PaymentInvoice</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Price</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.Product</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.RemoteTicket</class>
+		<class>com.jdoilfield.operationalsystem.domain.remote.FuelCard</class>
+
+		<exclude-unlisted-classes />
+	</persistence-unit>
+</persistence>

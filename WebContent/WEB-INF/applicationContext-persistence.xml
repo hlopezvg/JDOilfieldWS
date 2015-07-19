@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    	
+    <!-- Datasources -->
+    
+    <bean id="dataSourcePostgresql" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/jdoilfield" />
+	</bean>
+    
+    <bean id="dataSourceSQLServer" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/BussinessOne" />
+	</bean>
+	
+	<!-- *************************************************************************** -->
+
+	<bean id="entityManagerFactoryPostgresql" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourcePostgresql" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="OwnerPersistenceUnit" />
+	</bean>
+
+	<bean id="entityManagerFactorySQLServer" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceSQLServer" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="ExternalPersistenceUnit" />
+	</bean>
+
+	<bean id="localTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactoryPostgresql" />
+		<property name="dataSource" ref="dataSourcePostgresql" />
+	</bean>
+
+	<bean id="remoteTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactorySQLServer" />
+		<property name="dataSource" ref="dataSourceSQLServer" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="localTransactionManager" />
+	<tx:annotation-driven transaction-manager="remoteTransactionManager" />
+
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- ******************DEFINION DE BEANS DE PERSISTENCIA ********************* -->
+	
+	<!-- 
+	<bean id="accountStmtDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.AccountStmtDAOImpl"></bean>
+	<bean id="componentDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.ComponentDAOImpl"></bean>
+	<bean id="documentDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.DocumentDAOImpl"></bean>
+	<bean id="documentTypeDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.DocumentTypeDAOImpl"></bean>
+	<bean id="lovDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.LovDAOImpl"></bean>			
+	<bean id="priceDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.PriceDAOImpl"></bean>
+	<bean id="remotePaymentDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.RemotePaymentDAOImpl"></bean>
+	<bean id="roleDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.RoleDAOImpl"></bean>
+	<bean id="remoteTicketDao" class="com.jdoilfield.operationalsystem.persistence.hibernate.impl.RemoteTicketDAOImpl"></bean>
+	 -->
+	
+	<bean id="userDao" class="com.jdoilfield.operationalsystem.dao.impl.UserDAOImpl" />
+	<bean id="userManager" class="com.jdoilfield.operationalsystem.manager.impl.UserManagerImpl">
+		<property name="genericDao" ref="userDao" />
+	</bean>
+	
+	<bean id="businessPartnerDao" class="com.jdoilfield.operationalsystem.dao.impl.BusinessPartnerDAOImpl" />
+	<bean id="businessPartnerManager" class="com.jdoilfield.operationalsystem.manager.impl.BusinessPartnerManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="businessPartnerDao" />
+	</bean>
+	
+	<bean id="paymentDao" class="com.jdoilfield.operationalsystem.dao.impl.PaymentDAOImpl" />
+	<bean id="paymentManager" class="com.jdoilfield.operationalsystem.manager.impl.PaymentManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="paymentDao" />
+	</bean>
+	
+	<bean id="airportDao" class="com.jdoilfield.operationalsystem.dao.impl.AirportDAOImpl" />
+	<bean id="airportManager" class="com.jdoilfield.operationalsystem.manager.impl.AirportManagerImpl">
+		<property name="genericDao" ref="airportDao" />
+	</bean>
+	
+	<bean id="airplaneDao" class="com.jdoilfield.operationalsystem.dao.impl.AirplaneDAOImpl" />
+	<bean id="airplaneManager" class="com.jdoilfield.operationalsystem.manager.impl.AirplaneManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="airplaneDao" />
+	</bean>
+	
+	<bean id="productDao" class="com.jdoilfield.operationalsystem.dao.impl.ProductDAOImpl" />
+	<bean id="productManager" class="com.jdoilfield.operationalsystem.manager.impl.ProductManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="productDao" />
+	</bean>
+	
+	<bean id="roleComponentDao" class="com.jdoilfield.operationalsystem.dao.impl.RoleComponentDAOImpl" />
+	<bean id="roleComponentManager" class="com.jdoilfield.operationalsystem.manager.impl.RoleComponentManagerImpl">
+		<property name="genericDao" ref="roleComponentDao" />
+	</bean>
+	
+	<bean id="ticketDao" class="com.jdoilfield.operationalsystem.dao.impl.TicketDAOImpl" />
+	<bean id="ticketAuthManager" class="com.jdoilfield.operationalsystem.manager.impl.TicketAuthManagerImpl">
+		<property name="genericDao" ref="ticketDao" />
+		<property name="airportDao" ref="airportDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="remoteTicketManager" ref="remoteTicketManager" />
+		<property name="businessPartnerManager" ref="businessPartnerManager" />
+		<property name="mailSender" ref="springMailSender" />
+	</bean>
+	
+	<bean id="remoteTicketDAO" class="com.jdoilfield.operationalsystem.dao.impl.RemoteTicketDAOImpl" />
+	<bean id="remoteTicketManager" class="com.jdoilfield.operationalsystem.manager.impl.RemoteTicketManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="remoteTicketDAO" />
+	</bean>
+	
+	<!-- FUEL CARD -->
+	<bean id="fuelCardDao" class="com.jdoilfield.operationalsystem.dao.impl.FuelCardDAOImpl" />
+	<bean id="fuelCardAuthManager" class="com.jdoilfield.operationalsystem.manager.impl.FuelCardAuthManagerImpl">
+		<property name="genericDao" ref="fuelCardDao" />
+		<property name="remoteFuelCardManager" ref="remoteFuelCardManager" />
+		<property name="mailSender" ref="springMailSender" />
+	</bean>
+	
+	
+	<bean id="remoteFuelCardDAO" class="com.jdoilfield.operationalsystem.dao.impl.RemoteFuelCardDAOImpl" />
+	<bean id="remoteFuelCardManager" class="com.jdoilfield.operationalsystem.manager.impl.RemoteFuelCardManagerImpl">
+		<property name="remoteTransactionManager" ref="remoteTransactionManager"/>
+		<property name="genericDao" ref="remoteFuelCardDAO" />
+	</bean>
+</beans>
